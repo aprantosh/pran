@@ -711,3 +711,174 @@ body {
   .hero-title { letter-spacing: -2px; }
   .skills-grid, .projects-grid { grid-template-columns: 1fr; }
 }
+/* ==========================================
+   PATCH: Match updated HTML + script.js
+   (Add at the very bottom of style.css)
+========================================== */
+
+/* Make nav logo link look like text logo (since it's now <a>) */
+.nav-logo {
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+}
+
+/* Better focus visibility for accessibility */
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+/* ===========================
+   REVEAL ANIMATIONS (for script.js .visible)
+=========================== */
+
+/* Projects reveal */
+.project-card {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.45s ease, transform 0.45s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+.project-card.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Education cards reveal */
+.edu-card {
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 0.45s ease, transform 0.45s ease, border-color 0.3s ease;
+}
+.edu-card.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Certification items reveal */
+.cert-item {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+.cert-item.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Contact wrapper reveal */
+.contact-wrapper {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+.contact-wrapper.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ===========================
+   NEW: Impact section polish
+=========================== */
+.impact-section .project-card {
+  min-height: 180px;
+}
+.impact-section .project-number {
+  font-size: 12px;
+  opacity: 0.8;
+}
+
+/* ===========================
+   Buttons in nav / hero consistency
+=========================== */
+.nav-links a[href$=".pdf"] {
+  border: 1px solid var(--border);
+  padding: 8px 12px;
+  border-radius: 6px;
+}
+.nav-links a[href$=".pdf"]:hover {
+  border-color: var(--accent);
+}
+
+/* ===========================
+   Timeline visual refinement
+=========================== */
+.timeline-item {
+  will-change: transform, opacity;
+}
+.timeline-item.active .timeline-content h3 {
+  color: var(--text);
+}
+.timeline-item.active .timeline-content h4 {
+  color: var(--text-muted);
+}
+
+/* ===========================
+   Contact link wrapping improvement
+=========================== */
+.contact-item span:last-child {
+  word-break: break-word;
+}
+
+/* ===========================
+   Footer year span styling
+=========================== */
+#year {
+  color: inherit;
+}
+
+/* ===========================
+   Mobile nav polish
+=========================== */
+@media (max-width: 900px) {
+  .nav-links.open {
+    z-index: 120;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.35);
+  }
+
+  .nav-links.open a {
+    font-size: 12px;
+    letter-spacing: 1.2px;
+  }
+
+  .nav-toggle {
+    line-height: 1;
+    padding: 4px;
+  }
+
+  /* Hero stats stack cleaner on mobile */
+  .hero-stats {
+    flex-wrap: wrap;
+    gap: 20px 28px;
+  }
+
+  .stat {
+    min-width: 120px;
+  }
+}
+
+/* ===========================
+   Reduce motion support
+=========================== */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+
+  .hero-content,
+  .hero-visual,
+  .card-1, .card-2, .card-3,
+  .orb-1, .orb-2,
+  .badge-ring {
+    animation: none !important;
+  }
+
+  .skill-card,
+  .timeline-item,
+  .project-card,
+  .edu-card,
+  .cert-item,
+  .contact-wrapper {
+    transition: none !important;
+  }
+}
