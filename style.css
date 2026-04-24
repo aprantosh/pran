@@ -881,4 +881,347 @@ button:focus-visible {
   .contact-wrapper {
     transition: none !important;
   }
+}/* ===========================
+   HERO PHOTO (Prantosh)
+=========================== */
+.hero-photo-wrap {
+  position: absolute;
+  top: 70px;
+  left: 70px;
+  width: 240px;
+  height: 240px;
+  border-radius: 24px;
+  padding: 6px;
+  background: linear-gradient(135deg, rgba(0,229,192,0.35), rgba(108,99,255,0.35));
+  box-shadow: 0 20px 60px rgba(0,0,0,0.35);
+  z-index: 2;
+}
+
+.hero-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 18px;
+  display: block;
+  border: 1px solid rgba(255,255,255,0.08);
+  background: var(--bg-3);
+}
+
+/* Reposition floating cards so they don't overlap too much */
+.card-1 { top: 16px; right: 0; left: auto; }
+.card-2 { top: 280px; right: 10px; }
+.card-3 { bottom: 20px; left: 10px; }
+
+@media (max-width: 900px) {
+  .hero-photo-wrap {
+    position: relative;
+    top: auto;
+    left: auto;
+    width: 180px;
+    height: 180px;
+    margin: 0 auto 20px;
+  }
+}/* ===========================
+   AI CHAT WIDGET
+=========================== */
+
+#chat-toggle {
+  position: fixed;
+  right: 18px;
+  bottom: 18px;
+  width: 74px;
+  height: 74px;
+  border-radius: 22px;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  color: #0a0c10;
+  font-size: 34px;
+  cursor: pointer;
+  z-index: 200;
+  box-shadow: 0 0 30px rgba(0,229,192,0.35);
+  border: 1px solid rgba(255,255,255,0.12);
+  user-select: none;
+}
+
+#chat-toggle:hover {
+  transform: translateY(-2px);
+}
+
+#chat-toggle::after {
+  content: "Ask AI";
+  position: absolute;
+  bottom: -24px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.chat {
+  position: fixed;
+  right: 18px;
+  bottom: 100px;
+  width: 390px;
+  height: 540px;
+  max-width: calc(100vw - 36px);
+  max-height: calc(100vh - 130px);
+  display: none;
+  flex-direction: column;
+  background: rgba(15, 17, 23, 0.96);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.45);
+  backdrop-filter: blur(16px);
+  z-index: 210;
+  overflow: hidden;
+}
+
+.chat-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px;
+  border-bottom: 1px solid var(--border);
+  background: rgba(0,229,192,0.04);
+}
+
+.chat-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.bot-badge {
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  display: grid;
+  place-items: center;
+  background: rgba(0,229,192,0.08);
+  border: 1px solid rgba(0,229,192,0.22);
+  font-size: 18px;
+}
+
+.chat-status {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-muted);
+}
+.chat-status::before {
+  content: "";
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #22c55e;
+  margin-right: 6px;
+  vertical-align: middle;
+}
+
+#chat-close {
+  background: none;
+  border: 1px solid var(--border);
+  color: var(--text);
+  border-radius: 8px;
+  padding: 6px 10px;
+  cursor: pointer;
+}
+
+.chat-messages {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: auto;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.chat-input {
+  flex: 0 0 auto;
+  display: flex;
+  gap: 8px;
+  padding: 10px;
+  border-top: 1px solid var(--border);
+  background: rgba(10,12,16,0.8);
+}
+
+#user-input {
+  flex: 1;
+  min-width: 0;
+  background: var(--bg-3);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  color: var(--text);
+  padding: 10px 12px;
+  font-family: var(--font-body);
+  font-size: 14px;
+}
+
+#user-input::placeholder {
+  color: var(--text-dim);
+}
+
+#chat-send {
+  border: 1px solid rgba(0,229,192,0.25);
+  background: rgba(0,229,192,0.08);
+  color: var(--accent);
+  border-radius: 10px;
+  padding: 10px 14px;
+  cursor: pointer;
+  font-family: var(--font-mono);
+  font-size: 12px;
+}
+
+#chat-send:hover {
+  border-color: var(--accent);
+}
+
+/* Messages */
+.msg {
+  max-width: 88%;
+  padding: 10px 12px;
+  border-radius: 12px;
+  line-height: 1.45;
+  font-size: 14px;
+}
+
+.msg.user {
+  align-self: flex-end;
+  background: rgba(108,99,255,0.14);
+  border: 1px solid rgba(108,99,255,0.22);
+  color: var(--text);
+}
+
+.msg.ai {
+  align-self: flex-start;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--border);
+  color: var(--text);
+}
+
+@media (max-width: 900px) {
+  #chat-toggle {
+    width: 64px;
+    height: 64px;
+    font-size: 28px;
+    right: 14px;
+    bottom: 14px;
+  }
+
+  .chat {
+    right: 14px;
+    bottom: 86px;
+    width: calc(100vw - 28px);
+    height: 520px;
+  }
+
+  #chat-toggle::after {
+    display: none;
+  }
+}
+/* ===========================
+   HERO PHOTO NEXT TO NAME
+=========================== */
+
+.hero-title-row {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  margin-bottom: 24px;
+}
+
+.hero-title-row .hero-title {
+  margin-bottom: 0; /* because row handles spacing */
+}
+
+.hero-photo-inline-wrap {
+  flex-shrink: 0;
+  width: 124px;
+  height: 124px;
+  border-radius: 20px;
+  padding: 4px;
+  background: linear-gradient(135deg, rgba(0,229,192,0.45), rgba(108,99,255,0.35));
+  box-shadow: 0 16px 40px rgba(0,0,0,0.35);
+}
+
+.hero-photo-inline {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 16px;
+  display: block;
+  border: 1px solid rgba(255,255,255,0.10);
+  background: var(--bg-3);
+}
+
+/* Keep hero title readable with photo */
+.hero-title {
+  margin-bottom: 0;
+}
+
+/* Mobile */
+@media (max-width: 900px) {
+  .hero-title-row {
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+
+  .hero-photo-inline-wrap {
+    width: 110px;
+    height: 110px;
+  }
+}/* ===========================
+   RESTORE FLOATING CARDS IN HERO VISUAL
+=========================== */
+
+.hero-visual {
+  flex: 0 0 380px;
+  position: relative;
+  height: 460px;
+}
+
+/* Make sure cards are layered above orbs */
+.floating-card {
+  z-index: 3;
+  will-change: transform;
+}
+
+/* Reset positions (clean layout) */
+.card-1 {
+  top: 30px;
+  left: 0;
+  right: auto;
+  animation: floatCard1 4s ease-in-out infinite;
+}
+
+.card-2 {
+  top: 160px;
+  right: 0;
+  left: auto;
+  animation: floatCard2 5.2s ease-in-out infinite;
+}
+
+.card-3 {
+  bottom: 60px;
+  left: 30px;
+  right: auto;
+  animation: floatCard3 6s ease-in-out infinite;
+}
+
+@keyframes floatCard1 {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50%      { transform: translateY(-10px) rotate(-0.6deg); }
+}
+@keyframes floatCard2 {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50%      { transform: translateY(-12px) rotate(0.5deg); }
+}
+@keyframes floatCard3 {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50%      { transform: translateY(-8px) rotate(-0.4deg); }
 }

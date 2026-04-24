@@ -49,11 +49,17 @@
       <div class="hero-tag">
         <span class="mono">Ph.D. Candidate · Statistics & ML · Oklahoma State University</span>
       </div>
+      
+      <div class="hero-title-row">
+      <div class="hero-photo-inline-wrap">
+    <img src="prantosh.jpg" alt="Portrait of Prantosh Neupane" class="hero-photo-inline" />
+  </div>
 
-      <h1 class="hero-title">
-        Prantosh<br/>
-        <span class="outline-text">Neupane</span>
-      </h1>
+  <h1 class="hero-title">
+    Prantosh<br/>
+    <span class="outline-text">Neupane</span>
+  </h1>
+</div>
 
       <p class="hero-subtitle">
         Data Scientist &amp; ML Engineer building scalable analytics and AI systems for
@@ -86,6 +92,7 @@
       <div class="orb orb-1"></div>
       <div class="orb orb-2"></div>
 
+      
       <div class="floating-card card-1">
         <span class="mono tag-label">CURRENT FOCUS</span>
         <p>NLP · LLMs · MLOps</p>
@@ -460,6 +467,29 @@
     <span class="mono">Oklahoma City, OK</span>
   </footer>
 
+
+  <!-- AI Floating Button -->
+<div id="chat-toggle" aria-label="Open chat" role="button" tabindex="0">🤖</div>
+
+<div id="chat-container" class="chat" style="display:none;">
+  <div class="chat-head">
+    <div class="chat-title">
+      <span class="bot-badge" aria-hidden="true">🤖</span>
+      <div>
+        <strong>Prantosh AI</strong>
+        <div class="chat-status" id="chat-status">Online</div>
+      </div>
+    </div>
+    <button id="chat-close" aria-label="Close chat">✕</button>
+  </div>
+
+  <div id="chat-messages" class="chat-messages"></div>
+
+  <div class="chat-input">
+    <input type="text" id="user-input" placeholder="Ask about my research, projects, or skills..." />
+    <button id="chat-send" type="button">Send</button>
+  </div>
+</div>
   <script src="script.js"></script>
 </body>
 </html>

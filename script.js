@@ -202,4 +202,115 @@ document.addEventListener("DOMContentLoaded", () => {
   if (yearEl) {
     yearEl.textContent = new Date().getFullYear();
   }
+
+  // ===========================
+  // AI CHAT WIDGET
+  // ===========================
+  const chatToggle = document.getElementById("chat-toggle");
+  const chatContainer = document.getElementById("chat-container");
+  const chatMessages = document.getElementById("chat-messages");
+  const userInput = document.getElementById("user-input");
+  const chatClose = document.getElementById("chat-close");
+  const chatSend = document.getElementById("chat-send");
+  const chatStatus = document.getElementById("chat-status");
+
+  function addMessage(role, text) {
+    if (!chatMessages) return null;
+    const div = document.createElement("div");
+    div.className = `msg ${role}`;
+    div.innerHTML = `<strong>${role === "user" ? "You" : "AI"}:</strong> ${text}`;
+    chatMessages.appendChild(div);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+    return div;
+  }
+
+  function typeInto(el, text, speed = 12) {
+    let idx = 0;
+    el.innerHTML = "<strong>AI:</strong> ";
+    function step() {
+      if (idx < text.length) {
+        el.innerHTML += text.charAt(idx++);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+        setTimeout(step, speed);
+      }
+    }
+    step();
+  }
+
+  function toggleChat(forceOpen = null) {
+    if (!chatContainer) return;
+    const isOpen = chatContainer.style.display === "flex";
+    const next = forceOpen === null ? !isOpen : forceOpen;
+    chatContainer.style.display = next ? "flex" : "none";
+    if (next && userInput) userInput.focus();
+  }
+
+  if (chatToggle) {
+    chatToggle.addEventListener("click", () => toggleChat());
+    chatToggle.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        toggleChat();
+      }
+    });
+  }
+
+  if (chatClose) {
+    chatClose.addEventListener("click", () => toggleChat(false));
+  }
+
+  if (chatSend) {
+    chatSend.addEventListener("click", () => window.sendMessage?.());
+  }
+
+  if (userInput) {
+    userInput.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") window.sendMessage?.();
+    });
+  }
+
+  // welcome message
+  setTimeout(() => {
+    if (chatMessages && chatMessages.children.length === 0) {
+      addMessage("ai", "Hi! I’m Prantosh’s AI assistant. Ask about research, projects, ML, or data engineering experience.");
+    }
+  }, 700);
+
+  window.sendMessage = async function () {
+    const message = userInput?.value.trim();
+    if (!message) return;
+
+    addMessage("user", message);
+    userInput.value = "";
+
+    const aiDiv = document.createElement("div");
+    aiDiv.className = "msg ai";
+    aiDiv.innerHTML = "<strong>AI:</strong> ...";
+    chatMessages.appendChild(aiDiv);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+
+    if (chatStatus) chatStatus.textContent = "Typing...";
+
+    try {
+      // TODO: replace this URL with your actual Vercel API endpoint
+      const response = await fetch("https://YOUR-VERCEL-PROJECT.vercel.app/api/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message })
+      });
+
+      if (!response.ok) throw new Error("Server error");
+
+      const data = await response.json();
+      const reply = data?.reply || "I couldn't generate a response.";
+
+      if (chatStatus) chatStatus.textContent = "Online";
+      typeInto(aiDiv, reply, 12);
+
+    } catch (err) {
+      if (chatStatus) chatStatus.textContent = "Offline";
+      aiDiv.innerHTML = `<strong>AI:</strong> <span style="color:#ff8a8a;">Error connecting to AI.</span>`;
+    }
+  };
+
 });
